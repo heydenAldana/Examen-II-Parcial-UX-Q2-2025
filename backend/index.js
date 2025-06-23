@@ -13,7 +13,7 @@ app.use(express.json());
 // "Devuelve una lista de restaurantes limitada por el limit y offset"
 app.get("/restaurants/:limit/:offset", async(req, res) => {
     try {
-        const Query = await pool.query("SELECT * FROM restaurants LIMIT 10 OFFSET 0;");
+        const Query = await pool.query("SELECT * FROM restaurants LIMIT $1 OFFSET $2;", [req.params.limit, req.params.offset]);
         res.json(Query.rows);
     } catch (err) {
         console.table(err);
@@ -30,6 +30,22 @@ app.get("/restaurants/availability", async(req, res) => {
         console.table(err);
     }
 });
+
+/* Endpoint para reservar un restaurante a una hora especifica.
+    Setea en true la columna reserved
+    Actualiza la columna reservedBy con el personName
+ */
+app.put("/restaurants/reserve/:id/:personName/:scheduleTime", async(req, res) => {
+    try {
+        const { id, personName, scheduleTime } = req.params;
+        const Query = await pool.query("UPDATE restaurant_availability SET schedule_time = $1, reserved = true, reservedBy = $2 WHERE id = $3", [scheduleTime, personName, id]);
+        res.json(Query.rows);
+    } catch (err) {
+        console.log(err);
+        console.table(err);
+    }
+});
+
 
 // Hacer que el server escuche el puerto 5000
 app.listen(5000, () => {
