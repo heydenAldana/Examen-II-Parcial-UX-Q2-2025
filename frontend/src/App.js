@@ -1,22 +1,19 @@
-import logo from './logo.svg';
+
+import Badge from 'react-bootstrap/Badge';
+import Button from 'react-bootstrap/Button';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        
+        <h1>Bienvenidos al Restaurante JAMpedrano <br/>de Heyden Aldana</h1>
+        <h2> ¿Que desea hacer?
+          <Badge bg="secondary" as={Button}>
+            Ver
+          </Badge>
+        </h2>
       </header>
     </div>
   );
