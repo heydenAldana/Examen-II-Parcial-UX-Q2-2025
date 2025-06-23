@@ -1,0 +1,30 @@
+version: '3.9'
+services:
+  server:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PGHOST=localhost
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGPASSWORD=123
+      - PGDATABASE=ToDo
+    depends_on:
+      - client
+
+  client:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=Restaurant
+    ports:
+      - "5432:5432"
