@@ -13,7 +13,18 @@ app.use(express.json());
 // "Devuelve una lista de restaurantes limitada por el limit y offset"
 app.get("/restaurants/:limit/:offset", async(req, res) => {
     try {
-        const Query = await pool.query("SELECT * FROM restaurants LIMIT $1 OFFSET $2");
+        const Query = await pool.query("SELECT * FROM restaurants LIMIT 10 OFFSET 0;");
+        res.json(Query.rows);
+    } catch (err) {
+        console.table(err);
+    }
+});
+
+/* "Devuelve la disponibilidad de los restaurantes en base a la fecha actual, solamente de fechas futuras.
+    Tampoco devuelve las horas que ya han sido reservadas." */
+app.get("/restaurants/availability", async(req, res) => {
+    try {
+        const Query = await pool.query("SELECT * FROM restaurant_availability WHERE schedule_time >= CURRENT_DATE() ORDER BY date ASC;");
         res.json(Query.rows);
     } catch (err) {
         console.table(err);
