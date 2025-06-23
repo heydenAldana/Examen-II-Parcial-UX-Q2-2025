@@ -10,7 +10,7 @@ services:
       - PGPORT=5432
       - PGUSER=postgres
       - PGPASSWORD=123
-      - PGDATABASE=ToDo
+      - PGDATABASE=Restaurant
     depends_on:
       - client
 
